@@ -108,6 +108,7 @@ setTimeout(function () {
     var recognizing = true;
     recognition.continuous = true;
     recognition.interimResults = true;
+    recognition.lang = 'en-US';
     recognition.start();
 }, TIME_BEFORE_RECOGNITION);
 
@@ -251,17 +252,18 @@ AFRAME.registerComponent('cursor-listener', {
     // if Cursor was on box long enough:
     this.el.addEventListener('click', function (evt) {
       // if no img on box
-      if (!activeBox.getAttribute('src')) {
-          activeBox.setAttribute('material', 'opacity: 0.2');
-      }
+      // if (!activeBox.getAttribute('src')) {
+      //     activeBox.setAttribute('material', 'opacity: 0.2');
+      // }
 
       // redefine activeBox to the box Cursor is on right now
       activeBox = this;
+      activeBox.setAttribute('material', 'opacity: 0.5');
 
       // increase opacity to make box stand out
-      if (activeBox.getAttribute('material') !='opacity: 1') {
-          activeBox.setAttribute('material', 'opacity: 0.5');
-      }
+      // if (activeBox.getAttribute('material') !='opacity: 1') {
+      //     activeBox.setAttribute('material', 'opacity: 0.5');
+      // }
 
     });
   }
