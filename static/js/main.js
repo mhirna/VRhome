@@ -128,12 +128,7 @@ recognition.onend = function() {
 // define recognition.onresult() method
 recognition.onresult = function(event) {
     // stop recognition
-    recognition.stop()
-
-    // start recognition again in one second
-    setTimeout(function () {
-        recognition.start()
-    }, 1000);
+    recognizing = false;
 
     // init variable for speech to string recognition
     var interim_transcript = '';
@@ -182,9 +177,13 @@ function voiceToImg(keyword) {
             data: "{body}",
         })
         .done(function(data) {
+            displayVoice(keyword + "image found")
+            setTimeout(displayVoice("Ready for another image search"), 1000)
 
             activeBox.setAttribute('src', data.value[1].thumbnailUrl);
             activeBox.setAttribute('material', 'opacity: 1');
+
+            recognizing = true;
 
         })
         .fail(function(data) {
