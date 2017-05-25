@@ -1,5 +1,4 @@
-from flask import Flask, render_template, redirect
-from urllib import urlopen
+from flask import Flask, render_template
 app = Flask(__name__)
 
 
