@@ -2,6 +2,11 @@
 var ignore_onend;
 var start_timestamp;
 
+// Define queue for recognized words
+var keywordsQueue = new Queue()
+
+// Define variable to track word to img progress
+word_to_image_inProgress = false;
 // Define cubes amount
 var WIDTH = 5;
 var HEIGTH = 5;
@@ -93,7 +98,7 @@ var TIME_BEFORE_RECOGNITION = 1500;
 // Set up recognition params
 setTimeout(function () {
     var recognizing = true;
-    recognition.continuous = false;
+    recognition.continuous = true;
     recognition.interimResults = true;
     recognition.start();
 }, TIME_BEFORE_RECOGNITION);
@@ -128,9 +133,10 @@ recognition.onend = function() {
 
 // define recognition.onresult() method
 recognition.onresult = function(event) {
-    // stop recognition
-    recognizing = false;
-
+    while (word_to_image_inProgress) {
+      continue;
+    }
+    word_to_image_inProgress = true;
     // init variable for speech to string recognition
     var interim_transcript = '';
     for (var i = event.resultIndex; i < event.results.length; ++i) {
@@ -138,20 +144,24 @@ recognition.onresult = function(event) {
             interim_transcript = event.results[i][0].transcript;
     }
 
-    // capitalize recognized speech
+    // capitalize and linebreak recognized speech
     interim_transcript = capitalize(interim_transcript);
-
-
-    // console.log("SUCCESS RECOGNITION");
     var keywords = linebreak(interim_transcript);
+
+    // response to User
     displayVoice("Recognized:  ", keywords);
 
+
+
     if (keywords != "") {
-        // console.log(interim_transcript);
-        voiceToImg(keywords);
+        // add Recognized keyword to the queue
+        keywordsQueue.enqueue(keywords);
+
+        voiceToImg(keywordsQueue.dequeue());
         interim_transcript = "";
     }
 
+    word_to_image_inProgress = false;
 };
 
 // define function to display speech recognition response to User
