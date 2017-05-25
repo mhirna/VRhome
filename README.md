@@ -1,6 +1,6 @@
 # VRhome
 
-Stage 1 progress: finished.
+### Stage 1 progress: finished.
 
   - Result was saved to docs/FB_API_example.docx
 
@@ -10,13 +10,13 @@ Stage 1 progress: finished.
 
   - fb_api_example.py created
 
-Stage 2 progress: finished.
+### Stage 2 progress: finished.
 
   - Result of description was saved to docs/JSON_description_Batsenko.docx
 
   - Example of using json - json_example.py
 
-Stage 3 progress: finished.
+### Stage 3 progress: finished.
 
     Проведено аналіз даних, та сформована основна структура даних, з якою надалі
     будемо працювати.
@@ -26,7 +26,9 @@ Stage 3 progress: finished.
 
    - діаграма структури даних "черга" збережена у docs/queueDiagram.docx
 
-Stage 4 progress: in progress.
+   - опис структури даних "черга" збережена у docs/Опис черги.docx
+
+### Stage 4 progress: finished.
 
    - Дані для обробки отримуються динамічно, безпосередньо від користувача.
 
@@ -36,4 +38,6 @@ Stage 4 progress: in progress.
     дані отримуються від користувача індивідуально.
 
    -  Опис програми, яка розроблена для виконання завдання
-    збереженний у docs/Призначення та коротка характеристика програми.docx
+    збереженний у docs/Опис програми.docx
+
+### Stage 5 progress: in progress.

@@ -1,8 +1,21 @@
-// Set up constants
+/**
+* Set up constants
+*/
 var ignore_onend;
 var start_timestamp;
 
-// Define cubes amount
+/**
+* Define queue for recognized words
+*/
+var keywordsQueue = new Queue()
+
+/**
+* Define variable to track word to img progress
+*/
+word_to_image_inProgress = false;
+/**
+* Define cubes amount
+*/
 var WIDTH = 5;
 var HEIGTH = 5;
 
@@ -93,8 +106,9 @@ var TIME_BEFORE_RECOGNITION = 1500;
 // Set up recognition params
 setTimeout(function () {
     var recognizing = true;
-    recognition.continuous = false;
+    recognition.continuous = true;
     recognition.interimResults = true;
+    recognition.lang = 'en-US';
     recognition.start();
 }, TIME_BEFORE_RECOGNITION);
 
@@ -107,7 +121,7 @@ recognition.onstart = function() {
 recognition.onerror = function(event) {
 if (event.error == 'no-speech') {
   console.log('no-speech');
-  displayVoice("no-speech");
+  displayText("no-speech");
   ignore_onend = true;
   recognition.start()
 }
@@ -116,7 +130,7 @@ if (event.error == 'audio-capture') {
   ignore_onend = true;
 }
 if (event.error == 'not-allowed') {
-    displayVoice("ERROR: not-allowed");
+    displayText("ERROR: not-allowed");
   ignore_onend = true;
 }
 };
@@ -128,34 +142,40 @@ recognition.onend = function() {
 
 // define recognition.onresult() method
 recognition.onresult = function(event) {
-    // stop recognition
-    recognizing = false;
-
-    // init variable for speech to string recognition
-    var interim_transcript = '';
+    while (word_to_image_inProgress) {
+      continue;
+    }
+    word_to_image_inProgress = true;
+    /* init variable for speech to string recognition */
+    var transcript = '';
     for (var i = event.resultIndex; i < event.results.length; ++i) {
             console.log(event.results[i][0].transcript);
-            interim_transcript = event.results[i][0].transcript;
+            transcript = event.results[i][0].transcript;
     }
+    interim_transcript = transcript;
 
-    // capitalize recognized speech
+    // capitalize and linebreak recognized speech
     interim_transcript = capitalize(interim_transcript);
-
-
-    // console.log("SUCCESS RECOGNITION");
     var keywords = linebreak(interim_transcript);
-    displayVoice("Recognized:  ", keywords);
+
+    // response to User
+    displayText("Recognized:  ", keywords);
+
+
 
     if (keywords != "") {
-        // console.log(interim_transcript);
-        voiceToImg(keywords);
+        // add Recognized keyword to the queue
+        keywordsQueue.enqueue(keywords);
+
+        voiceToImg(keywordsQueue.dequeue());
         interim_transcript = "";
     }
 
+    word_to_image_inProgress = false;
 };
 
 // define function to display speech recognition response to User
-function displayVoice(recognized) {
+function displayText(recognized) {
      document.querySelector('#mytext').setAttribute('value', recognized);
 }
 
@@ -169,7 +189,7 @@ function voiceToImg(keyword) {
         };
 
         // response to User
-        displayVoice("Looking for " + keyword + " image...")
+        displayText("Looking for " + keyword + " image...")
 
         // call POST method and get images
         $.ajax({
@@ -177,7 +197,7 @@ function voiceToImg(keyword) {
             beforeSend: function(xhrObj){
                 // Request headers
                 xhrObj.setRequestHeader("Content-Type","multipart/form-data");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","9f4e6f80e80c4fe18572c9d93db93f22");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","40299816916143ef859d4643147473d2");
             },
             type: "POST",
             // Request body
@@ -187,25 +207,23 @@ function voiceToImg(keyword) {
         // if SUCCESS:
         .done(function(data) {
             // response to User
-            displayVoice(keyword + "image found")
+            displayText(keyword + "image found")
 
             // response to User
-            setTimeout(displayVoice("Ready for another image search"), 3000)
+            setTimeout(displayText("Ready for another image search"), 3000)
 
             // set up image to activeBox
-            activeBox.setAttribute('src', data.value[1].thumbnailUrl);
+            activeBox.setAttribute('src', data.value[0].thumbnailUrl);
             activeBox.setAttribute('material', 'opacity: 1');
 
             // stop (if needed) and start again recognition
-            recognition.stop()
-            recognition.start()
             // recognizing = true;
 
         })
         // if fail try again
         .fail(function(data) {
           console.log("ERROR:     ", data)
-          displayVoice("Something went wrong, please, try again")
+          displayText("Something went wrong, please, try again")
 
           // stop (if needed) and start again recognition
           recognition.stop()
@@ -234,17 +252,18 @@ AFRAME.registerComponent('cursor-listener', {
     // if Cursor was on box long enough:
     this.el.addEventListener('click', function (evt) {
       // if no img on box
-      if (!activeBox.getAttribute('src')) {
-          activeBox.setAttribute('material', 'opacity: 0.2');
-      }
+      // if (!activeBox.getAttribute('src')) {
+      //     activeBox.setAttribute('material', 'opacity: 0.2');
+      // }
 
       // redefine activeBox to the box Cursor is on right now
       activeBox = this;
+      activeBox.setAttribute('material', 'opacity: 0.5');
 
       // increase opacity to make box stand out
-      if (activeBox.getAttribute('material') !='opacity: 1') {
-          activeBox.setAttribute('material', 'opacity: 0.5');
-      }
+      // if (activeBox.getAttribute('material') !='opacity: 1') {
+      //     activeBox.setAttribute('material', 'opacity: 0.5');
+      // }
 
     });
   }
