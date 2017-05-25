@@ -1,13 +1,21 @@
-// Set up constants
+/**
+* Set up constants
+*/
 var ignore_onend;
 var start_timestamp;
 
-// Define queue for recognized words
+/**
+* Define queue for recognized words
+*/
 var keywordsQueue = new Queue()
 
-// Define variable to track word to img progress
+/**
+* Define variable to track word to img progress
+*/
 word_to_image_inProgress = false;
-// Define cubes amount
+/**
+* Define cubes amount
+*/
 var WIDTH = 5;
 var HEIGTH = 5;
 
@@ -137,7 +145,7 @@ recognition.onresult = function(event) {
       continue;
     }
     word_to_image_inProgress = true;
-    // init variable for speech to string recognition
+    /* init variable for speech to string recognition */
     var transcript = '';
     for (var i = event.resultIndex; i < event.results.length; ++i) {
             console.log(event.results[i][0].transcript);
@@ -204,7 +212,7 @@ function voiceToImg(keyword) {
             setTimeout(displayVoice("Ready for another image search"), 3000)
 
             // set up image to activeBox
-            activeBox.setAttribute('src', data.value[1].thumbnailUrl);
+            activeBox.setAttribute('src', data.value[0].thumbnailUrl);
             activeBox.setAttribute('material', 'opacity: 1');
 
             // stop (if needed) and start again recognition
