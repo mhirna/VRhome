@@ -3,21 +3,43 @@
 <head>
 <title>VR Ideas</title>
 <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+<link rel="stylesheet" href="1.css">
 </head>
 
 <body>
 <a-scene>
+<a-assets>
+	<img id="one" src="1.jpg">
+	<img id="two" src="2.jpg">
+	<img id="three" src="3.jpg">
+	<img id="four" src="4.jpg">
+	<img id="five" src="5.jpg">
+	<img id="six" src="6.jpg">
+	<img id="seven" src="7.jpg">
+	<img id="eight" src="8.jpg">
+	<img id="nine" src="9.jpg">
+</a-assets>
+<a-image width="6" height="8.04" position="8 3 -15" material="opacity: 0.8" src="https://raw.githubusercontent.com/tbatsenko/VRhome/master/static/img/1.jpg"></a-image>
+<a-image width="6" height="8.04" position="0 3 -15" material="opacity: 0.8" src="https://raw.githubusercontent.com/tbatsenko/VRhome/master/static/img/2.jpg"></a-image>
+<a-image width="6" height="8.04" position="-8 3 -15" material="opacity: 0.8" src="https://raw.githubusercontent.com/tbatsenko/VRhome/master/static/img/3.jpg"></a-image>
+<a-image width="6" height="8.04" position="15 3 -8" rotation="0 90 0" material="opacity: 0.8" src="https://raw.githubusercontent.com/tbatsenko/VRhome/master/static/img/4.jpg"></a-image>
+<a-image width="6" height="8.04" position="15 3 0" rotation="0 90 0" material="opacity: 0.8" src="https://raw.githubusercontent.com/tbatsenko/VRhome/master/static/img/5.jpg"></a-image>
+<a-image width="6" height="8.04" position="15 3 8" rotation="0 90 0" material="opacity: 0.8" src="https://raw.githubusercontent.com/tbatsenko/VRhome/master/static/img/6.jpg"></a-image>
+<a-image width="6" height="8.04" position="-15 3 -8" rotation="0 -90 0" material="opacity: 0.8" src="https://raw.githubusercontent.com/tbatsenko/VRhome/master/static/img/7.jpg"></a-image>
+<a-image width="6" height="8.04" position="-15 3 0" rotation="0 -90 0" material="opacity: 0.8" src="https://raw.githubusercontent.com/tbatsenko/VRhome/master/static/img/8.jpg"></a-image>
+<a-image width="6" height="8.04" position="-15 3 8" rotation="0 -90 0" material="opacity: 0.8" src="https://raw.githubusercontent.com/tbatsenko/VRhome/master/static/img/9.jpg"></a-image>
 <a-entity
     geometry="primitive: box"
     light="color: #ffffff; groundColor: #c0c0c0; type: point"
     position="0 0 0"
+	scale="32.0 32.0 32.0"
     material="opacity: 0.5; side: double; offset: [object Object]; repeat: [object Object]; ambientOcclusionTextureOffset: [object Object]; ambientOcclusionTextureRepeat: [object Object]; displacementTextureOffset: [object Object]; displacementTextureRepeat: [object Object]; fog: false; normalScale: [object Object]; normalTextureOffset: [object Object]; normalTextureRepeat: [object Object]">
 </a-entity>
 <a-sky color="#ECECEC" position="" rotation="" scale="" visible="" material="" geometry="depth: 10; height: 10; width: 10"></a-sky>
+
 <a-entity position="0 0 0" scale="1.0 1.0 1.0" light="color: #ffffff; groundColor: #c0c0c0; type: point" visible="false">
-<a-camera camera="active:false;userHeight:1.6" wasd-controls="fly:true" acceleration="60" look-controls="" position="" rotation="-88.052 -20.387 -0.660" scale="1 1 1"></a-camera>
+<a-camera camera="active:false;userHeight:1.6" wasd-controls="fly:true" acceleration="60" look-controls="" position="10 0 10" rotation="-88.052 -20.387 -0.660" scale="1 1 1"></a-camera>
 </a-entity>
-<a-box position="-0.3 0.3 0.3" scale="0.1 0.1 0.1" material="offset: [object Object]; repeat: [object Object]; ambientOcclusionTextureOffset: [object Object]; ambientOcclusionTextureRepeat: [object Object]; color: #4CC3D9; displacementTextureOffset: [object Object]; displacementTextureRepeat: [object Object]; normalScale: [object Object]; normalTextureOffset: [object Object]; normalTextureRepeat: [object Object]" ></a-box>
 </a-scene>
 </body>
 </html>
