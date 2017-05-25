@@ -121,7 +121,7 @@ recognition.onstart = function() {
 recognition.onerror = function(event) {
 if (event.error == 'no-speech') {
   console.log('no-speech');
-  displayVoice("no-speech");
+  displayText("no-speech");
   ignore_onend = true;
   recognition.start()
 }
@@ -130,7 +130,7 @@ if (event.error == 'audio-capture') {
   ignore_onend = true;
 }
 if (event.error == 'not-allowed') {
-    displayVoice("ERROR: not-allowed");
+    displayText("ERROR: not-allowed");
   ignore_onend = true;
 }
 };
@@ -159,7 +159,7 @@ recognition.onresult = function(event) {
     var keywords = linebreak(interim_transcript);
 
     // response to User
-    displayVoice("Recognized:  ", keywords);
+    displayText("Recognized:  ", keywords);
 
 
 
@@ -175,7 +175,7 @@ recognition.onresult = function(event) {
 };
 
 // define function to display speech recognition response to User
-function displayVoice(recognized) {
+function displayText(recognized) {
      document.querySelector('#mytext').setAttribute('value', recognized);
 }
 
@@ -189,7 +189,7 @@ function voiceToImg(keyword) {
         };
 
         // response to User
-        displayVoice("Looking for " + keyword + " image...")
+        displayText("Looking for " + keyword + " image...")
 
         // call POST method and get images
         $.ajax({
@@ -207,10 +207,10 @@ function voiceToImg(keyword) {
         // if SUCCESS:
         .done(function(data) {
             // response to User
-            displayVoice(keyword + "image found")
+            displayText(keyword + "image found")
 
             // response to User
-            setTimeout(displayVoice("Ready for another image search"), 3000)
+            setTimeout(displayText("Ready for another image search"), 3000)
 
             // set up image to activeBox
             activeBox.setAttribute('src', data.value[0].thumbnailUrl);
@@ -223,7 +223,7 @@ function voiceToImg(keyword) {
         // if fail try again
         .fail(function(data) {
           console.log("ERROR:     ", data)
-          displayVoice("Something went wrong, please, try again")
+          displayText("Something went wrong, please, try again")
 
           // stop (if needed) and start again recognition
           recognition.stop()
