@@ -183,6 +183,7 @@ function voiceToImg(keyword) {
             activeBox.setAttribute('src', data.value[1].thumbnailUrl);
             activeBox.setAttribute('material', 'opacity: 1');
 
+            recognition.stop()
             recognition.start()
             recognizing = true;
 
@@ -190,6 +191,8 @@ function voiceToImg(keyword) {
         .fail(function(data) {
           console.log("ERROR:     ", data)
           displayVoice("Something went wrong, please, try again")
+          recognition.stop()
+          recognition.start()
         });
     }
 }
