@@ -107,47 +107,52 @@ recognition.onstart = function() {
 recognition.onerror = function(event) {
 if (event.error == 'no-speech') {
   console.log('no-speech');
-//   showInfo('info_no_speech');
+  displayVoice("no-speech");
   ignore_onend = true;
 }
 if (event.error == 'audio-capture') {
  console.log('audio-capture');
-//   showInfo('info_no_microphone');
   ignore_onend = true;
 }
 if (event.error == 'not-allowed') {
-  if (event.timeStamp - start_timestamp < 100) {
-    // showInfo('info_blocked');
-  } else {
-    // showInfo('info_denied');
-  }
+    displayVoice("ERROR: not-allowed");
   ignore_onend = true;
 }
 };
 
+// define recognition.onend() method
 recognition.onend = function() {
     recognizing = false;
 };
 
+// define recognition.onresult() method
 recognition.onresult = function(event) {
+    // stop recognition
     recognition.stop()
+
+    // start recognition again in one second
     setTimeout(function () {
         recognition.start()
     }, 1000);
+
+    // init variable for speech to string recognition
     var interim_transcript = '';
     for (var i = event.resultIndex; i < event.results.length; ++i) {
+            console.log(event.results[i][0].transcript);
             interim_transcript = event.results[i][0].transcript;
     }
-    interim_transcript = capitalize(interim_transcript);
-    // final_span.innerHTML = linebreak(final_transcript);
 
-    console.log("SUCCESS RECOGNITION");
-    var mykeyword = linebreak(interim_transcript);
-    // console.log(mykeyword);
-    if (interim_transcript != "") {
+    // capitalize recognized speech
+    interim_transcript = capitalize(interim_transcript);
+
+
+    // console.log("SUCCESS RECOGNITION");
+    var keywords = linebreak(interim_transcript);
+    displayVoice("Recognized:  ", keywords);
+
+    if (keywords != "") {
         // console.log(interim_transcript);
-        displayVoice(interim_transcript);
-        voiceToImg(interim_transcript);
+        voiceToImg(keywords);
         interim_transcript = "";
     }
 
@@ -163,8 +168,8 @@ function voiceToImg(keyword) {
             // Request parameters
             "q": keyword,
         };
-        console.log(keyword);
 
+        displayVoice("Looking for " + keyword + " image...")
         $.ajax({
             url: "https://api.cognitive.microsoft.com/bing/v5.0/images/search?" + $.param(params),
             beforeSend: function(xhrObj){
@@ -182,7 +187,8 @@ function voiceToImg(keyword) {
             activeBox.setAttribute('material', 'opacity: 1');
 
         })
-        .fail(function() {
+        .fail(function(data) {
+          console.log("ERROR:     ", data)
         });
     }
 }
@@ -213,7 +219,7 @@ AFRAME.registerComponent('cursor-listener', {
           activeBox.setAttribute('material', 'opacity: 0.4');
       }
 
-      console.log('I was clicked at: ', evt.detail.intersection.point);
+      // console.log('I was clicked at: ', evt.detail.intersection.point);
     });
   }
 });
