@@ -191,7 +191,7 @@ function voiceToImg(keyword) {
         .fail(function(data) {
           console.log("ERROR:     ", data)
           displayVoice("Something went wrong, please, try again")
-          recognition.stop()
+          recognition.start()
           recognition.start()
         });
     }
