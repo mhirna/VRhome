@@ -2,12 +2,10 @@
 <meta charset="utf-8">
 <title>VR ideas</title>
 <head>
-
     <link rel="stylesheet" href="../static/css/style.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
     <script src="http://rawgit.com/dbradleyfl/aframe-gridhelper/master/dist/aframe-gridhelper-component.min.js"></script>
-
 </head>
 <body>
 
@@ -17,7 +15,7 @@
       <a-entity mixin="marker" position="-2.5 0.7 0.01"></a-entity>
       <a-sky color="#c8c8c8"></a-sky>
 
-      <a-entity position="0 0 0"><a-text id="mytext" color="blue" class="mytext" value="Hello World;"></a-text></a-entity>
+      <a-entity position="0 0 0"><a-text id="mytext" color="blue" class="mytext" value="Say something to start recognition"></a-text></a-entity>
 
     <!-- Camera + cursor. -->
     <a-camera position="0 0 20">
@@ -27,7 +25,7 @@
                 material="color: blue; shader: flat">
         </a-cursor>
     </a-camera>
-    <script src="../static/js/set-image.js"></script>
+    <script src="../static/js/main.js"></script>
 </a-scene>
 
 </body>

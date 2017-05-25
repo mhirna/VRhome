@@ -1,13 +1,18 @@
-// var recognizing = true;
+// Set up constants
 var ignore_onend;
 var start_timestamp;
-var counter = 0;
 
+// Define cubes amount
 var WIDTH = 5;
 var HEIGTH = 5;
 
+// Define cube size
 var BOX_SIDE = 5;
+
+// Get scene element
 var sceneEl = document.querySelector('a-scene');
+
+// Build front wall of boxes
 for (var i = 0; i < HEIGTH; i++) {
     for (var j = 0; j < WIDTH; j++) {
         var aBox = document.createElement('a-box');;
@@ -24,6 +29,7 @@ for (var i = 0; i < HEIGTH; i++) {
     }
 }
 
+// Build right wall of boxes
 var sceneEl = document.querySelector('a-scene');
 for (var i = 0; i < HEIGTH; i++) {
     for (var j = 0; j < WIDTH; j++) {
@@ -41,6 +47,7 @@ for (var i = 0; i < HEIGTH; i++) {
     }
 }
 
+// Build left wall of boxes
 for (var i = 0; i < HEIGTH; i++) {
     for (var j = 0; j < WIDTH; j++) {
         var aBox = document.createElement('a-box');;
@@ -57,6 +64,7 @@ for (var i = 0; i < HEIGTH; i++) {
     }
 }
 
+// Build ceiling of boxes
 for (var i = 0; i < HEIGTH; i++) {
     for (var j = 0; j < WIDTH; j++) {
         var aBox = document.createElement('a-box');;
@@ -73,21 +81,29 @@ for (var i = 0; i < HEIGTH; i++) {
     }
 }
 
+// Set up activeBox
 var activeBox = document.getElementById('myimg_1');
 
-var TIME_BEFORE_RECOGNITION = 1500;
+// Set up Voice Recognition
 var recognition = new webkitSpeechRecognition();
+
+// Set delay before the Voice Recognition Starts
+var TIME_BEFORE_RECOGNITION = 1500;
+
+// Set up recognition params
 setTimeout(function () {
     var recognizing = true;
-    recognition.continuous = true;
+    recognition.continuous = false;
     recognition.interimResults = true;
     recognition.start();
 }, TIME_BEFORE_RECOGNITION);
 
+// define recognition.onstart() method
 recognition.onstart = function() {
     recognizing = true;
 };
 
+// define recognition.onerror() method
 recognition.onerror = function(event) {
 if (event.error == 'no-speech') {
   console.log('no-speech');
