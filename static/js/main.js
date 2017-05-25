@@ -197,7 +197,7 @@ function voiceToImg(keyword) {
             beforeSend: function(xhrObj){
                 // Request headers
                 xhrObj.setRequestHeader("Content-Type","multipart/form-data");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","a6c6037f9b0842d0a87c58a96db93a8f");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","40299816916143ef859d4643147473d2");
             },
             type: "POST",
             // Request body
