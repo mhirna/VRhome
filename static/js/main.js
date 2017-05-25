@@ -178,16 +178,18 @@ function voiceToImg(keyword) {
         })
         .done(function(data) {
             displayVoice(keyword + "image found")
-            setTimeout(displayVoice("Ready for another image search"), 1000)
+            setTimeout(displayVoice("Ready for another image search"), 3000)
 
             activeBox.setAttribute('src', data.value[1].thumbnailUrl);
             activeBox.setAttribute('material', 'opacity: 1');
 
+            recognition.start()
             recognizing = true;
 
         })
         .fail(function(data) {
           console.log("ERROR:     ", data)
+          displayVoice("Something went wrong, please, try again")
         });
     }
 }
