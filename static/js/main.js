@@ -138,11 +138,12 @@ recognition.onresult = function(event) {
     }
     word_to_image_inProgress = true;
     // init variable for speech to string recognition
-    var interim_transcript = '';
+    var transcript = '';
     for (var i = event.resultIndex; i < event.results.length; ++i) {
             console.log(event.results[i][0].transcript);
-            interim_transcript = event.results[i][0].transcript;
+            transcript = event.results[i][0].transcript;
     }
+    interim_transcript = transcript;
 
     // capitalize and linebreak recognized speech
     interim_transcript = capitalize(interim_transcript);
