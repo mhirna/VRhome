@@ -109,6 +109,7 @@ if (event.error == 'no-speech') {
   console.log('no-speech');
   displayVoice("no-speech");
   ignore_onend = true;
+  recognition.start()
 }
 if (event.error == 'audio-capture') {
  console.log('audio-capture');
@@ -153,18 +154,24 @@ recognition.onresult = function(event) {
 
 };
 
+// define function to display speech recognition response to User
 function displayVoice(recognized) {
      document.querySelector('#mytext').setAttribute('value', recognized);
 }
 
+// define function, which searchs for image by keyword
 function voiceToImg(keyword) {
+    // check if keyword is correct
     if (keyword !="" && keyword !=" " && keyword !="  ") {
         var params = {
             // Request parameters
             "q": keyword,
         };
 
+        // response to User
         displayVoice("Looking for " + keyword + " image...")
+
+        // call POST method and get images
         $.ajax({
             url: "https://api.cognitive.microsoft.com/bing/v5.0/images/search?" + $.param(params),
             beforeSend: function(xhrObj){
@@ -176,54 +183,67 @@ function voiceToImg(keyword) {
             // Request body
             data: "{body}",
         })
+
+        // if SUCCESS:
         .done(function(data) {
+            // response to User
             displayVoice(keyword + "image found")
+
+            // response to User
             setTimeout(displayVoice("Ready for another image search"), 3000)
 
+            // set up image to activeBox
             activeBox.setAttribute('src', data.value[1].thumbnailUrl);
             activeBox.setAttribute('material', 'opacity: 1');
 
+            // stop (if needed) and start again recognition
             recognition.stop()
             recognition.start()
-            recognizing = true;
+            // recognizing = true;
 
         })
+        // if fail try again
         .fail(function(data) {
           console.log("ERROR:     ", data)
           displayVoice("Something went wrong, please, try again")
-          recognition.start()
+
           recognition.start()
         });
     }
 }
 
+// define linebreak function to correct transcript from speech recognition
 var two_line = /\n\n/g;
 var one_line = /\n/g;
 function linebreak(s) {
   return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
 }
 
+// define capitalize function to correct transcript from speech recognition
 var first_char = /\S/;
 function capitalize(s) {
   return s.replace(first_char, function(m) { return m.toUpperCase(); });
 }
 
-
+// register Cursor and allow it to interact with the boxes
 AFRAME.registerComponent('cursor-listener', {
   init: function () {
     var COLORS = ['red', 'green', 'blue'];
+    // if Cursor was on box long enough:
     this.el.addEventListener('click', function (evt) {
-    //   var randomIndex = Math.floor(Math.random() * COLORS.length);
-    //   this.setAttribute('material', 'color', COLORS[randomIndex]);
+      // if no img on box
       if (!activeBox.getAttribute('src')) {
           activeBox.setAttribute('material', 'opacity: 0.2');
       }
+
+      // redefine activeBox to the box Cursor is on right now
       activeBox = this;
+
+      // increase opacity to make box stand out
       if (activeBox.getAttribute('material') !='opacity: 1') {
-          activeBox.setAttribute('material', 'opacity: 0.4');
+          activeBox.setAttribute('material', 'opacity: 0.5');
       }
 
-      // console.log('I was clicked at: ', evt.detail.intersection.point);
     });
   }
 });
