@@ -1,22 +1,34 @@
-<!doctype html>
-
-<html lang="en">
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>VR ideas</title>
 <head>
-  <meta charset="utf-8">
 
-  <title>VRhome WebVR</title>
-  <meta name="description" content="VRhome WebVR app">
-  <meta name="author" content="tbatsenko & mary.hirna">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="http://rawgit.com/dbradleyfl/aframe-gridhelper/master/dist/aframe-gridhelper-component.min.js"></script>
 
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
-
-  <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-  <![endif]-->
 </head>
-
 <body>
-  <h1>Welcome to your VRhome!</h1>    
-  <script src="js/scripts.js"></script>
+
+<a-scene>
+      <!-- <a-box id="myimg_1" src="" depth="4" height="4" width="4" position="-12 12 0" rotation="0 0 0"></a-box> -->
+
+      <a-entity mixin="marker" position="-2.5 0.7 0.01"></a-entity>
+      <a-sky color="#c8c8c8"></a-sky>
+
+      <a-entity position="0 0 0"><a-text id="mytext" color="blue" class="mytext" value="Hello World;"></a-text></a-entity>
+
+    <!-- Camera + cursor. -->
+    <a-camera position="0 0 20">
+        <a-cursor fuse="true" fuseTimeout="5"
+                position="0 0 -1"
+                geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
+                material="color: blue; shader: flat">
+        </a-cursor>
+    </a-camera>
+    <script src="../static/js/set-image.js"></script>
+</a-scene>
+
 </body>
 </html>

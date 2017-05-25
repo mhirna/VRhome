@@ -10,4 +10,4 @@ Stage 1 progress:
 Stage 2 progress:
    JSON tasks finished.
    - Result of description was saved to docs/JSON_description_Batsenko.docx
-   - Example of using json - json_example.py 
+   - Example of using json - json_example.py

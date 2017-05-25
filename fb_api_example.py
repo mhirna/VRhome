@@ -8,7 +8,7 @@ graph = facebook.GraphAPI(access_token=token, version='2.8')
 
 # set parameters for login
 canvas_url = 'https://vrhome.pythonanywhere.com/auth'
-perms = ['manage_pages', 'publish_pages']
+perms = ['manage_page', 'publish_pages']
 
 # generate login URL
 fb_login_url = graph.auth_url(app_id, canvas_url, perms)
