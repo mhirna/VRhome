@@ -1,0 +1,38 @@
+{
+  "coverage": "9.52%",
+  "expectCount": 21,
+  "actualCount": 2,
+  "files": {
+    "VRhome/static/js/main.js": {
+      "expectCount": 20,
+      "actualCount": 2,
+      "undocumentLines": [
+        23,
+        20,
+        104,
+        98,
+        244,
+        178,
+        243,
+        238,
+        237,
+        139,
+        121,
+        144,
+        116,
+        101,
+        46,
+        26,
+        236,
+        183
+      ]
+    },
+    "VRhome/static/js/queue.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        3
+      ]
+    }
+  }
+}
