@@ -207,8 +207,6 @@ function voiceToImg(keyword) {
             activeBox.setAttribute('material', 'opacity: 1');
 
             // stop (if needed) and start again recognition
-            recognition.stop()
-            recognition.start()
             // recognizing = true;
 
         })
