@@ -142,21 +142,24 @@ recognition.onend = function() {
 
 // define recognition.onresult() method
 recognition.onresult = function(event) {
-    while (word_to_image_inProgress) {
-      continue;
-    }
-    word_to_image_inProgress = true;
-    /* init variable for speech to string recognition */
-    var transcript = '';
-    for (var i = event.resultIndex; i < event.results.length; ++i) {
-            console.log(event.results[i][0].transcript);
-            transcript = event.results[i][0].transcript;
-    }
-    interim_transcript = transcript;
+   var timerBool = false;
+   var secCount = setTimeout(function(){
+                    timerBool = true;
+                      }, 1600);
+   var interim_transcript = '';
+   var final_transcript = '';
+   for (var i = event.resultIndex; i < event.results.length; ++i) {
+     if (event.results[i].isFinal || timerBool) {
+       final_transcript += event.results[i][0].transcript;
+     } else {
+       interim_transcript += event.results[i][0].transcript;
+     }
+   }
+   final_transcript = capitalize(final_transcript);
+
 
     // capitalize and linebreak recognized speech
-    interim_transcript = capitalize(interim_transcript);
-    var keywords = linebreak(interim_transcript);
+    var keywords = linebreak(final_transcript);
 
     // response to User
     displayText("Recognized:  ", keywords);
@@ -197,7 +200,7 @@ function voiceToImg(keyword) {
             beforeSend: function(xhrObj){
                 // Request headers
                 xhrObj.setRequestHeader("Content-Type","multipart/form-data");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","40299816916143ef859d4643147473d2");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","d70179a9c38d44cd872e1624f88a8f20");
             },
             type: "POST",
             // Request body
