@@ -1,6 +1,7 @@
 /**
 * Set up constants
 */
+console.log(GoogleImageSearch);
 var ignore_onend;
 var start_timestamp;
 
@@ -186,29 +187,33 @@ function displayText(recognized) {
 function voiceToImg(keyword) {
     // check if keyword is correct
     if (keyword !="" && keyword !=" " && keyword !="  ") {
-        var params = {
-            // Request parameters
-            "q": keyword,
-        };
+        // var params = {
+        //     // Request parameters
+        //     "q": keyword,
+        // };
 
-        // response to User
-        displayText("Looking for " + keyword + " image...")
+        // // response to User
+        // displayText("Looking for " + keyword + " image...")
 
-        // call POST method and get images
-        $.ajax({
-            url: "https://api.cognitive.microsoft.com/bing/v5.0/images/search?" + $.param(params),
-            beforeSend: function(xhrObj){
-                // Request headers
-                xhrObj.setRequestHeader("Content-Type","multipart/form-data");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","d70179a9c38d44cd872e1624f88a8f20");
-            },
-            type: "POST",
-            // Request body
-            data: "{body}",
-        })
+        // // call POST method and get images
+        // $.ajax({
+        //     url: "https://api.cognitive.microsoft.com/bing/v5.0/images/search?" + $.param(params),
+        //     beforeSend: function(xhrObj){
+        //         // Request headers
+        //         xhrObj.setRequestHeader("Content-Type","multipart/form-data");
+        //         xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","d70179a9c38d44cd872e1624f88a8f20");
+        //     },
+        //     type: "POST",
+        //     // Request body
+        //     data: "{body}",
+        // })
 
-        // if SUCCESS:
-        .done(function(data) {
+        // // if SUCCESS:
+        // .done(function(data) {
+        GoogleImageSearch.searchImage(keyword)
+        .then((res) => {
+            console.log(res); // This will return array of image URLs
+
             // response to User
             displayText(keyword + "image found")
 
@@ -216,7 +221,7 @@ function voiceToImg(keyword) {
             setTimeout(displayText("Ready for another image search"), 3000)
 
             // set up image to activeBox
-            activeBox.setAttribute('src', data.value[0].thumbnailUrl);
+            activeBox.setAttribute('src', res[0]);
             activeBox.setAttribute('material', 'opacity: 1');
 
             // stop (if needed) and start again recognition
@@ -224,7 +229,7 @@ function voiceToImg(keyword) {
 
         })
         // if fail try again
-        .fail(function(data) {
+         .catch(function(data) {
           console.log("ERROR:     ", data)
           displayText("Something went wrong, please, try again")
 
